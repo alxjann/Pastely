@@ -1,0 +1,12 @@
+{
+  "name": "Pastely",
+  "short_name": "Pastely",
+  "description": "Real-time clipboard sync between iOS and Windows",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f8fafc",
+  "theme_color": "#ffffff",
+  "icons": [
+    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}
