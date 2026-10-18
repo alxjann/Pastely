@@ -1,6 +1,6 @@
 # Pastely
 
-A fast, real-time, and ephemeral cross-device clipboard pastebin. Send text, photos, and files between your phone and computer instantly.
+A fast and real-time cross-device clipboard pastebin. Send text, photos, and files between your phone and computer instantly.
 
 Everything is temporary and automatically self-destructs after **5 minutes**.
 
