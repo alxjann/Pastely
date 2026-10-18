@@ -1,0 +1,10 @@
+/node_modules
+skills-lock.json
+
+.agents/
+.claude/
+.next/
+
+convex/_generated/
+
+.env.local
