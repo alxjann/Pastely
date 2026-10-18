@@ -5,12 +5,12 @@ import { api } from "@/convex/_generated/api";
 import UploadPanel from "./UploadPanel";
 import ClipCard from "./ClipCard";
 
-export default function ClipboardApp() {
-  const clips = useQuery(api.clips.list); // live subscription over WebSocket
+export default function ClipboardApp({ roomId, password }) {
+  const clips = useQuery(api.clips.list, { roomId, password }); // live subscription over WebSocket
 
   return (
     <div className="space-y-6 sm:space-y-8">
-      <UploadPanel />
+      <UploadPanel roomId={roomId} password={password} />
 
       <section aria-label="Shared clipboard clips" className="space-y-3">
         <div className="flex items-center justify-between px-1">
@@ -44,7 +44,7 @@ export default function ClipboardApp() {
 
         <div className="space-y-3">
           {clips?.map((clip) => (
-            <ClipCard key={clip._id} clip={clip} />
+            <ClipCard key={clip._id} clip={clip} roomId={roomId} password={password} />
           ))}
         </div>
       </section>

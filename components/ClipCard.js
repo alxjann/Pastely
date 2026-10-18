@@ -20,7 +20,7 @@ function formatSize(b = 0) {
   return `${(b / 1048576).toFixed(1)} MB`;
 }
 
-export default function ClipCard({ clip }) {
+export default function ClipCard({ clip, roomId, password }) {
   const remove = useMutation(api.clips.remove);
   const timeLeft = useCountdown(clip.expiresAt);
   const [copied, setCopied] = useState(false);
@@ -199,7 +199,7 @@ export default function ClipCard({ clip }) {
 
         <button
           type="button"
-          onClick={() => remove({ id: clip._id })}
+          onClick={() => remove({ roomId, password, id: clip._id })}
           aria-label="Delete item"
           className="inline-flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl border border-zinc-200 bg-white text-zinc-400 transition hover:border-zinc-300 hover:text-zinc-600 hover:bg-zinc-50 active:scale-95"
         >

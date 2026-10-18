@@ -5,7 +5,7 @@ import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 import { ACCEPT_ATTR, MAX_FILE_BYTES, MAX_TEXT_CHARS, validateMime } from "@/convex/lib/mime";
 
-export default function UploadPanel() {
+export default function UploadPanel({ roomId, password }) {
   const addText = useMutation(api.clips.addText);
   const generateUploadUrl = useMutation(api.clips.generateUploadUrl);
   const addFile = useMutation(api.clips.addFile);
@@ -21,7 +21,7 @@ export default function UploadPanel() {
     setError("");
     setBusy(true);
     try {
-      await addText({ text });
+      await addText({ roomId, password, text });
       setText("");
     } catch (e) {
       setError(cleanError(e));
@@ -92,7 +92,7 @@ export default function UploadPanel() {
         });
         if (!res.ok) throw new Error("Upload failed.");
         const { storageId } = await res.json();
-        await addFile({ storageId, fileName: file.name });
+        await addFile({ roomId, password, storageId, fileName: file.name });
       }
     } catch (e) {
       setError(cleanError(e));
