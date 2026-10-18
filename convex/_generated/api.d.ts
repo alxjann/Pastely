@@ -10,6 +10,7 @@
 
 import type * as clips from "../clips.js";
 import type * as lib_mime from "../lib/mime.js";
+import type * as rooms from "../rooms.js";
 
 import type {
   ApiFromModules,
@@ -20,6 +21,7 @@ import type {
 declare const fullApi: ApiFromModules<{
   clips: typeof clips;
   "lib/mime": typeof lib_mime;
+  rooms: typeof rooms;
 }>;
 
 /**
