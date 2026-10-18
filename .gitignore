@@ -5,6 +5,6 @@ skills-lock.json
 .claude/
 .next/
 
-convex/_generated/
+convex/_generated/ai/
 
 .env.local
