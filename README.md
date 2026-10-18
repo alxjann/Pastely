@@ -10,8 +10,8 @@ Everything is temporary and automatically self-destructs after **5 minutes**.
 
 - **⚡ Real-time Sync**: Instant updates across all connected devices using Convex WebSockets.
 - **⏳ Auto-Destruct**: All clips and files permanently expire and delete after 5 minutes.
-- **📱 Cross-Platform**: Works smoothly across iOS, Android, Windows, and macOS browsers.
-- **📄 Multi-format**: Paste or upload text snippets, photos, and documents.
+- **📱 Cross-Platform**: Works across different device.
+- **📄 Multi-format**: Paste or upload text, photos, and documents.
 - **📲 PWA Support**: Installable directly on your iPhone or desktop home screen.
 
 ---
@@ -19,9 +19,8 @@ Everything is temporary and automatically self-destructs after **5 minutes**.
 ## 🛠️ Tech Stack
 
 - **Framework**: [Next.js](https://nextjs.org/) (App Router)
-- **Backend & Realtime**: [Convex](https://www.convex.dev/)
+- **Database**: [Convex](https://www.convex.dev/)
 - **Styling**: [Tailwind CSS](https://tailwindcss.com/)
-- **Fonts**: [Poppins](https://fonts.google.com/specimen/Poppins) & [Inter](https://fonts.google.com/specimen/Inter)
 
 ---
 
@@ -47,10 +46,3 @@ npx convex dev
 ```bash
 npm run dev
 ```
-
-Open [http://localhost:3000](http://localhost:3000) (or your local IP `http://192.168.x.x:3000` to test across other devices on the same Wi-Fi).
-
----
-
-## 📄 License
-MIT
