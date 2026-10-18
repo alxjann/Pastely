@@ -23,13 +23,14 @@ export default function RoomPage() {
   const [checking, setChecking] = useState(false);
   const [copiedLink, setCopiedLink] = useState(false);
 
-  // Load existing session password from sessionStorage on mount
+  // Load existing saved password from localStorage on mount
   useEffect(() => {
     if (typeof window !== "undefined" && roomId) {
-      const stored = sessionStorage.getItem(`pastely_room_${roomId}`);
+      const stored = localStorage.getItem(`pastely_room_${roomId}`);
       if (stored) {
         setVerifiedPassword(stored);
       }
+      localStorage.setItem("pastely_last_room", roomId);
     }
   }, [roomId]);
 
@@ -44,7 +45,7 @@ export default function RoomPage() {
       if (!authCheck.valid) {
         setVerifiedPassword("");
         if (typeof window !== "undefined") {
-          sessionStorage.removeItem(`pastely_room_${roomId}`);
+          localStorage.removeItem(`pastely_room_${roomId}`);
         }
         setError("Password is no longer valid. Please re-enter.");
       }
@@ -64,7 +65,8 @@ export default function RoomPage() {
       if (result.valid) {
         setVerifiedPassword(passwordInput.trim());
         if (typeof window !== "undefined") {
-          sessionStorage.setItem(`pastely_room_${roomId}`, passwordInput.trim());
+          localStorage.setItem(`pastely_room_${roomId}`, passwordInput.trim());
+          localStorage.setItem("pastely_last_room", roomId);
         }
       } else {
         setError("Incorrect password. Please try again.");

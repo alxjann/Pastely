@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
@@ -11,6 +11,7 @@ export default function Home() {
   const verifyPassword = useMutation(api.rooms.verifyPassword);
 
   const [tab, setTab] = useState("join"); // "join" or "create"
+  const [lastRoom, setLastRoom] = useState("");
 
   // Join Room State
   const [joinId, setJoinId] = useState("");
@@ -25,6 +26,21 @@ export default function Home() {
   const [showCreatePassword, setShowCreatePassword] = useState(false);
   const [creating, setCreating] = useState(false);
   const [createError, setCreateError] = useState("");
+
+  // Auto-load last room and credentials from localStorage on this device
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const savedLast = localStorage.getItem("pastely_last_room");
+      if (savedLast) {
+        setLastRoom(savedLast);
+        setJoinId(savedLast);
+        const savedPwd = localStorage.getItem(`pastely_room_${savedLast}`);
+        if (savedPwd) {
+          setJoinPassword(savedPwd);
+        }
+      }
+    }
+  }, []);
 
   function generateRandomRoom() {
     const words = ["alpha", "swift", "cozy", "pixel", "quiet", "zen", "cloud", "vault", "echo", "flow"];
@@ -56,7 +72,8 @@ export default function Home() {
         return;
       }
       if (typeof window !== "undefined") {
-        sessionStorage.setItem(`pastely_room_${cleaned}`, trimmedPwd);
+        localStorage.setItem(`pastely_room_${cleaned}`, trimmedPwd);
+        localStorage.setItem("pastely_last_room", cleaned);
       }
       router.push(`/${cleaned}`);
     } catch {
@@ -84,7 +101,8 @@ export default function Home() {
     try {
       await createRoom({ roomId: cleaned, password: trimmedPwd });
       if (typeof window !== "undefined") {
-        sessionStorage.setItem(`pastely_room_${cleaned}`, trimmedPwd);
+        localStorage.setItem(`pastely_room_${cleaned}`, trimmedPwd);
+        localStorage.setItem("pastely_last_room", cleaned);
       }
       router.push(`/${cleaned}`);
     } catch (err) {
@@ -110,6 +128,22 @@ export default function Home() {
 
         {/* Room Card with Tabs */}
         <div className="rounded-2xl border border-zinc-200/90 bg-white p-5 sm:p-6 shadow-[0_1px_4px_rgba(0,0,0,0.02)]">
+
+          {/* Quick jump to previously accessed room on this device */}
+          {lastRoom && (
+            <div className="mb-4 flex items-center justify-between rounded-xl border border-zinc-200/80 bg-zinc-50/80 px-3.5 py-2 text-xs">
+              <span className="text-zinc-500">
+                Saved room: <strong className="text-zinc-800 font-semibold">{lastRoom}</strong>
+              </span>
+              <button
+                type="button"
+                onClick={() => router.push(`/${lastRoom}`)}
+                className="font-semibold text-zinc-900 hover:underline transition"
+              >
+                Open →
+              </button>
+            </div>
+          )}
 
           {/* Segmented Switcher */}
           <div className="mb-5 flex rounded-xl bg-zinc-100 p-1 text-xs font-semibold">
